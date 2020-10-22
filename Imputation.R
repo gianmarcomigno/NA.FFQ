@@ -8,7 +8,7 @@ df %>%
   mutate_at(vars(19:98), ~ifelse(is.na(.x), mean(.x, na.rm = TRUE), .x))             # mean imputation
   mutate_at(vars(19:98), ~ifelse(is.na(.x), median(.x, na.rm = TRUE), .x))           # median imputation
   mutate_at(vars(19:98), ~ifelse(is.na(.x), Mode(.x), .x))                           # mode imputation
-  #write.csv(.,file = "~/Desktop/Uni-Projects/NA.FFQ/Data/df_0_imp.csv")             # save different .cvs files
+  #write.csv(.,file = "~/df_0_imp.csv")                                              # save different .cvs files
   
 # MICE
 df_red <- df %>% select(-c(id,walk91, walk93, walk95, walk97, age_bin, bmi_bin, charlsonA)) # Exclude redundant variables

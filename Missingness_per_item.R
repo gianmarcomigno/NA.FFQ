@@ -3,7 +3,7 @@
 sort(sapply(df, function(x) sum(is.na(x))/length(x)*100)) 
 
 # Dataset with %NA per variable for each questions group (variables 19-98 are food-related)
-map(df[, 19:98], ~sum(is.na(.))) %>% unlist %>% prop.table(.) %>% round(digits = 6) %>% as.data.frame() %>% tibble::rownames_to_column() %>%
+map(df[, 19:98], ~sum(is.na(.))) %>% unlist %>% `/`(42065) %>% round(digits = 6) %>% as.data.frame() %>% tibble::rownames_to_column() %>%
   mutate(group = {c(rep(1,17),rep(2,8),rep(3,8),rep(4,7),rep(5,4),rep(6,11),rep(7,7),rep(8,12),rep(9,6)) %>% 
       as.factor()}) %>%
   rename(., perc = .) -> na_per_var_perc

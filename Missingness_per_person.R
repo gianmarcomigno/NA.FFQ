@@ -36,4 +36,5 @@ df %>% pull(na_sum) %>% table %>% `/`(nrow(df)) %>% as.data.frame %>%
         panel.border = element_rect(colour = "black", fill=NA, size=.5),
         panel.grid.major.y = element_line(color = "grey80"),
         panel.grid.major.x = element_line(color = "grey80")) +
-  geom_hline(yintercept = 79-3.12, linetype='dotted', col = 'black') # mean(df$na_sum)=3.12, but shifted for participants w/ 0 NA
+  geom_hline(yintercept = 79-3.12, linetype='dotted', col = 'black', size=1) + # mean(df$na_sum)=3.12, but shifted for participants w/ 0 NA
+  geom_hline(yintercept = 79-5.61, linetype='dotted', col = 'green', size=1)

@@ -38,27 +38,27 @@ na_per_var_perc <- na_per_var_perc %>%
 na_per_var_perc %>%
   mutate(labelthis = ifelse(perc %in% unlist({na_per_var_perc %>% group_by(group) %>% summarise(maxperc = max(perc), minperc = min(perc)) %>% 
       select(maxperc, minperc)}), rowname, NA)) %>%
-  ggplot(., aes(x=factor(1:80), y=perc, color = group)) +
+  ggplot(., aes(y=factor(80:1), x=perc, color = group)) +
   geom_point(shape=19, size=2, fill = na_per_var_perc$group) +
-  labs(x="", y="Proportion of participants with NA", col="Question\ngroup", title = "Distribution of missing data across 80 questions in NMQ") +
+  labs(y="", x="Proportion of participants with NA", col="Question\ngroup", title = "Distribution of missing data across 80 questions in NMQ") +
   scale_fill_discrete(breaks = levels(na_per_var_perc$group)) +
   scale_color_manual(labels=c("Dairy/Bread", "Corn", "Meat", "Bird/Fish", "Potato", 
                               "Vegetables", "Fruit", "Snack", "Alcohol"),
                      values=c("#000000", "#999999", "#E69F00", "#56B4E9", "#009E73", 
                               "#F0E442", "#0072B2", "#D55E00", "#CC79A7")) +
-  scale_x_discrete(breaks= 1:80, labels = na_per_var_perc$rowname) +
-  scale_y_continuous(trans = scales::log10_trans(),
+  scale_y_discrete(breaks= 1:80, labels = rev(na_per_var_perc$rowname)) +
+  scale_x_continuous(trans = scales::log10_trans(),
                      labels = function(x) format(x, scientific = FALSE,
                                                  drop0trailing = T), # labels=comma
                      limits = c(10^-3,1)) +
   annotation_logticks(sides = 'l') +
-  theme(axis.text.x=element_text(angle=45,hjust=1), panel.background = element_blank(),
+  theme(axis.text.y=element_text(angle=0,hjust=1), panel.background = element_blank(),
         legend.key = element_rect(colour = NA, fill = NA),
         plot.title = element_text(hjust = 0.5),
-        text = element_text(size=16),
+        text = element_text(size=14),
         panel.border = element_rect(colour = "black", fill=NA, size=.5),
-        panel.grid.major.x = element_line(color = "grey80"),
-        panel.grid.major.y = element_line(color = "grey80")) +
+        panel.grid.major.y = element_line(color = "grey80"),
+        panel.grid.major.x = element_line(color = "grey80")) +
   geom_text(aes(label=labelthis),hjust=1,vjust=-0.5,size=5, show.legend = F) 
 # fit negative binomial regression
 #geom_point(data = nbGLM_idk$model, aes(nbGLM_idk$z, nbGLM_idk$model$fitted), shape = '-', size = 6)

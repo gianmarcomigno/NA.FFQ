@@ -20,15 +20,20 @@ df %>% filter(na_sum==1) %>% select(19:98) %>%
   sort(T)
   
 # plot: y-log-scaled
-ggplot(as.data.frame(table(df$na_sum)/nrow(df)), 
-       aes(x=factor(Var1), y = Freq)) + 
-  #geom_bar(stat="identity") +
+df %>% pull(na_sum) %>% table %>% `/`(nrow(df)) %>% as.data.frame %>%
+  select(2:1) %>% rename(., x = Freq, y=.) %>%
+  ggplot(., aes(rev(x),y)) +
   geom_point(shape=19, size=2) +
-  scale_y_continuous(trans = scales::log10_trans(),
+  labs(y="Number of NA per participant", x="Proportion of sample", title = "Distribution of missing data across all the SNM cohort") +
+  scale_x_continuous(trans = scales::log10_trans(),
                      labels = function(x) format(x, scientific = FALSE,
                                                  drop0trailing = T), # labels=comma
                      limits = c(10^-5,1)) +
-  annotation_logticks(sides = 'l') +
-  theme(axis.text.x=element_text(hjust=1), panel.background = element_blank()) +
-  labs(x="Number of NA per participant", y="Proportion of sample") + 
-  geom_vline(xintercept = 4.12) # mean(df$na_sum)=3.12, but shifted for participants w/ 0 NA
+  scale_y_discrete(labels = c(80:77, 74:0)) +
+  theme(axis.text.y=element_text(angle=0,hjust=1), panel.background = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        text = element_text(size=14),
+        panel.border = element_rect(colour = "black", fill=NA, size=.5),
+        panel.grid.major.y = element_line(color = "grey80"),
+        panel.grid.major.x = element_line(color = "grey80")) +
+  geom_hline(yintercept = 79-3.12, linetype='dotted', col = 'black') # mean(df$na_sum)=3.12, but shifted for participants w/ 0 NA

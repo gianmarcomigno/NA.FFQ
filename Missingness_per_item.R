@@ -42,7 +42,7 @@ na_per_var_perc %>%
   geom_point(shape=19, size=2, fill = na_per_var_perc$group) +
   labs(y="", x="Proportion of participants with NA", col="Question\ngroup", title = "Distribution of missing data across 80 questions in NMQ") +
   scale_fill_discrete(breaks = levels(na_per_var_perc$group)) +
-  scale_color_manual(labels=c("Dairy/Bread", "Corn", "Meat", "Bird/Fish", "Potato", 
+  scale_color_manual(labels=c("Dairy/Bread", "Grains", "Meat", "Bird/Fish", "Potato", 
                               "Vegetables", "Fruit", "Snack", "Alcohol"),
                      values=c("#000000", "#999999", "#E69F00", "#56B4E9", "#009E73", 
                               "#F0E442", "#0072B2", "#D55E00", "#CC79A7")) +
